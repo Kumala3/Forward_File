@@ -1,13 +1,12 @@
 from aiogram.utils.markdown import hbold
-from tgbot.config import load_config
 
 
-def show_info(sup_username):
-    text_info = "\n".join(
+def get_bot_rules(sup_username):
+    rules = "\n".join(
         [
-            f"{hbold(f'Bot information')}",
+            f"{hbold(f'Bot rules')}",
             "You can only send files up to 20mb (Telegram restrictions)",
             f"❤️ Any questions left - {sup_username}",
         ]
     )
-    return text_info
+    return rules

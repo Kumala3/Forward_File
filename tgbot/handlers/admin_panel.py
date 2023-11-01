@@ -1,9 +1,10 @@
 from aiogram import Dispatcher, types
+
 from tgbot.filters.admin import AdminFilter
-from tgbot.misc.throttling import rate_limit
+from tgbot.keyboards.admin_funcs import admin_keyboard
 from tgbot.misc.allow_access import allow_access
-from tgbot.texts.admin_text import admin_text
-from tgbot.keyboards.admin_func import admin_funcs
+from tgbot.misc.throttling import rate_limit
+from tgbot.texts.greeting_admin import admin_instructions
 
 
 def register_admin(dp: Dispatcher):
@@ -11,4 +12,4 @@ def register_admin(dp: Dispatcher):
     @rate_limit(30, key="admin_start", num_messages=5)
     @dp.message_handler(AdminFilter(is_admin=True), commands=['start'])
     async def admin_start(message: types.Message):
-        await message.answer(admin_text, reply_markup=admin_funcs)
+        await message.answer(text=admin_instructions, reply_markup=admin_keyboard)

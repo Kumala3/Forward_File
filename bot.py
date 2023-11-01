@@ -7,15 +7,14 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 
 from tgbot.config import load_config
 from tgbot.filters.admin import AdminFilter
-from tgbot.handlers.admin import register_admin
 from tgbot.handlers.acl_test import register_acl_test
-from tgbot.handlers.user_start import register_user
-
-from tgbot.middlewares.environment import EnvironmentMiddleware
-from tgbot.middlewares.bit_brother import BigBrother
-from tgbot.middlewares.throttling import ThrottlingMiddleWare
+from tgbot.handlers.admin_panel import register_admin
+from tgbot.handlers.user_panel import register_user_panel
 from tgbot.middlewares.acl import ACLMiddleWare
+from tgbot.middlewares.bit_brother import BigBrother
+from tgbot.middlewares.environment import EnvironmentMiddleware
 from tgbot.middlewares.sentenel import Sentinel
+from tgbot.middlewares.throttling import ThrottlingMiddleWare
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +33,7 @@ def register_all_filters(dp):
 
 def register_all_handlers(dp):
     register_admin(dp)
-    register_user(dp)
+    register_user_panel(dp)
     register_acl_test(dp)
 
 

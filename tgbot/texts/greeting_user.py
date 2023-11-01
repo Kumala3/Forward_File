@@ -1,10 +1,10 @@
 from aiogram.utils.markdown import hbold
 
 
-def show_start_text(username: str):
-    greeting_text = "\n".join(
+def get_welcome_text(username: str):
+    greetings_text = "\n".join(
         [
             f"{hbold(f'Welcome {username} !')}",
         ]
     )
-    return greeting_text
+    return greetings_text
