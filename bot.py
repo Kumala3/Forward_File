@@ -15,6 +15,7 @@ from tgbot.middlewares.bit_brother import BigBrother
 from tgbot.middlewares.environment import EnvironmentMiddleware
 from tgbot.middlewares.sentenel import Sentinel
 from tgbot.middlewares.throttling import ThrottlingMiddleWare
+from tgbot.services.set_comands import set_default_commands
 
 logger = logging.getLogger(__name__)
 
@@ -31,10 +32,14 @@ def register_all_filters(dp):
     dp.filters_factory.bind(AdminFilter, event_handlers=[dp.message_handlers])
 
 
-def register_all_handlers(dp):
-    register_admin(dp)
+def register_all_handlers(dp, bot):
+    register_admin(dp, bot)
     register_user_panel(dp)
     register_acl_test(dp)
+
+
+async def set_all_default_commands(bot: Bot):
+    await set_default_commands(bot)
 
 
 async def main():
@@ -54,7 +59,9 @@ async def main():
 
     register_all_middlewares(dp, config)
     register_all_filters(dp)
-    register_all_handlers(dp)
+    register_all_handlers(dp, bot)
+
+    await set_all_default_commands(bot)
 
     # start
     try:

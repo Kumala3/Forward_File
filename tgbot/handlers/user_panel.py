@@ -7,9 +7,11 @@ from tgbot.config import load_config
 from tgbot.keyboards.cancel_file import cancel_keyboard
 from tgbot.keyboards.start_panel import keyboard_panel
 from tgbot.keyboards.support import create_support_keyboard
+from tgbot.services.db_api import DataBase
 from tgbot.texts.bot_rules import get_bot_rules
 from tgbot.texts.greeting_user import get_welcome_text
 from tgbot.texts.send_file import rules_sending_file
+from tgbot.texts.unregonised_message import unregistered_message
 from tgbot.texts.user_profile import get_user_info
 
 
@@ -18,8 +20,25 @@ def register_user_panel(dp: Dispatcher):
 
     @dp.message_handler(commands=['start'])
     async def user_start(message: Message):
+        user_id = message.from_user.id
         username = message.from_user.username
+        user_fullname = message.from_user.full_name
+        lang_code = message.from_user.language_code
+        is_premium = str(message.from_user.is_premium)
+        register_time = str(message.date.replace())
+
+        db = DataBase()
+
+        db.create_table_users()
+
+        db.add_user(user_id=user_id, username=username, full_name=user_fullname, lang_code=lang_code,
+                    is_premium=is_premium, register_time=register_time)
+
         await message.answer(text=get_welcome_text(username), reply_markup=keyboard_panel)
+
+    @dp.message_handler()
+    async def unrecognised_command(message: Message):
+        await message.answer(text=unregistered_message)
 
     @dp.message_handler(text="My profile")
     async def cancel_sending_file(message: Message):
@@ -29,7 +48,8 @@ def register_user_panel(dp: Dispatcher):
 
     @dp.message_handler(text="Information")
     async def info(message: Message):
-        await message.answer(text=get_bot_rules(support_username), reply_markup=create_support_keyboard(support_username))
+        await message.answer(text=get_bot_rules(support_username),
+                             reply_markup=create_support_keyboard(support_username))
 
     @dp.message_handler(text="Send file")
     async def send_file(message: Message):
