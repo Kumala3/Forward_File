@@ -25,14 +25,14 @@ def register_user_panel(dp: Dispatcher):
         user_fullname = message.from_user.full_name
         lang_code = message.from_user.language_code
         is_premium = str(message.from_user.is_premium)
-        register_time = str(message.date.replace())
+        registered_time = str(message.date.replace())
 
         db = DataBase()
 
         db.create_table_users()
 
         db.add_user(user_id=user_id, username=username, full_name=user_fullname, lang_code=lang_code,
-                    is_premium=is_premium, register_time=register_time)
+                    is_premium=is_premium, registered_time=registered_time)
 
         await message.answer(text=get_welcome_text(username), reply_markup=keyboard_panel)
 

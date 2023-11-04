@@ -69,15 +69,3 @@ def register_admin(dp: Dispatcher, bot: Bot):
 
     get_info_user(dp)
 
-    # await call.message.answer(text=user_identifier_prompt)
-    # await UserState.user_idd.set()
-
-    # @dp.message_handler(state=UserState.user_idd)
-    # async def get_info_user(message: Message, state: FSMContext):
-    #     user_id = message.text
-    #     await state.update_data(user_id=user_id)
-    #     await state.set_state(None)
-    #
-    #     selected_user = db.select_user(user_id=user_id)
-    #     await message.answer(f"Username: @{selected_user[0][1]}\n"
-    #                          f"All user data: {selected_user[0]}")
