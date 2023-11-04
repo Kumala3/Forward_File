@@ -2,12 +2,11 @@ import asyncio
 
 from aiogram import Dispatcher, Bot
 from aiogram.dispatcher import FSMContext
-from aiogram.types import CallbackQuery
-from aiogram.types import Message
+from aiogram.types import CallbackQuery, Message
 
 from tgbot.filters.admin import AdminFilter
+from tgbot.handlers.chose_buttons import get_info_user
 from tgbot.keyboards.admin_funcs import admin_keyboard
-from tgbot.keyboards.chose_data_user import data_select_keyboard
 from tgbot.misc.User_State import UserState
 from tgbot.misc.allow_access import allow_access
 from tgbot.services.db_api import DataBase
@@ -68,14 +67,10 @@ def register_admin(dp: Dispatcher, bot: Bot):
         count_user = db.count_users()
         await call.message.answer(text=f"Number users: {count_user[0]}")
 
-    @dp.callback_query_handler(text="info_user")
-    async def set_user_id(call: CallbackQuery):
-        await call.message.answer(text="Please chose date which you would like to get",
-                                  reply_markup=data_select_keyboard)
+    get_info_user(dp)
 
-
-        # await call.message.answer(text=user_identifier_prompt)
-        # await UserState.user_idd.set()
+    # await call.message.answer(text=user_identifier_prompt)
+    # await UserState.user_idd.set()
 
     # @dp.message_handler(state=UserState.user_idd)
     # async def get_info_user(message: Message, state: FSMContext):
