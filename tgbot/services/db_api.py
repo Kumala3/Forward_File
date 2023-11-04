@@ -59,17 +59,16 @@ class DataBase:
         sql = "SELECT * FROM Users"
         return self.execute(sql, fetchall=True)
 
-    @staticmethod
-    def format_args(sql, parameters: dict):
-        sql += " AND ".join([
-            f"{item} = ?" for item in parameters
-        ])
-        return sql, tuple(parameters.values())
+    # @staticmethod
+    # def format_args(sql, parameters: dict):
+    #     sql += " AND ".join([
+    #         f"{item} = ?" for item in parameters
+    #     ])
+    #     return sql, tuple(parameters.values())
 
-    def select_user(self, **kwargs):
-        sql = "SELECT * FROM Users WHERE user_id = ? OR user_name = ?"
-        sql, parameters = self.format_args(sql, kwargs)
-        return self.execute(sql, parameters, fetchall=True)
+    def select_user(self, user_id: int):
+        sql = "SELECT * FROM Users WHERE user_id = ?"
+        return self.execute(sql, parameters=(user_id,), fetchall=True)
 
     def count_users(self):
         return self.execute("SELECT COUNT(*) FROM Users;", fetchone=True)

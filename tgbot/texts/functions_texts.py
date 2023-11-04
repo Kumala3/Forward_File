@@ -6,5 +6,6 @@ warning_message = "\n".join([
 
 ])
 
-question_1 = hbold("Enter user_id (int) user which you would like to delete")
+user_id_request = hbold("Enter user_id (int) user which you would like to delete")
 cancel_text = hbold("Cancel deleting user from DB, message will automatically deleted in 3 sec")
+user_identifier_prompt = hbold("Enter user_id (int) or username (str) user which you would like to")
